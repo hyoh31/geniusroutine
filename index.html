@@ -3,17 +3,31 @@
 <head>
   <meta charset="UTF-8" />
   <title>천재 루틴 하루 체크리스트</title>
+
+  <!-- 모바일에서 정상 동작하게 하는 뷰포트 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
   <style>
     * {
       box-sizing: border-box;
     }
+
+    /* ✅ iPhone에서도 스크롤 되게 강제 */
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
     body {
       font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
-      margin: 0;
       padding: 20px;
       background: #0f172a;
       color: #e5e7eb;
     }
+
     h1, h2, h3 {
       margin: 0 0 10px;
     }
@@ -38,6 +52,7 @@
     .container {
       max-width: 850px;
       margin: 0 auto;
+      padding-bottom: 80px; /* ✅ 하단 요약바에 가리지 않게 여유 */
     }
     .card {
       background: #020617;
@@ -106,10 +121,13 @@
       color: #9ca3af;
       margin-bottom: 4px;
     }
+
+    /* ✅ iPhone에서 sticky 대신 fixed로, 전체 폭에 맞추기 */
     .summary-bar {
-      position: sticky;
+      position: fixed;
+      left: 50%;
+      transform: translateX(-50%);
       bottom: 10px;
-      margin-top: 16px;
       padding: 10px 12px;
       border-radius: 999px;
       background: rgba(15,23,42,0.95);
@@ -118,7 +136,9 @@
       align-items: center;
       justify-content: space-between;
       backdrop-filter: blur(12px);
+      width: calc(100% - 40px);
       max-width: 850px;
+      z-index: 100;
     }
     .summary-text {
       font-size: 13px;
@@ -155,6 +175,7 @@
       color: #9ca3af;
       margin-top: 4px;
     }
+
     @media print {
       body {
         background: #fff;
@@ -168,6 +189,8 @@
         position: static;
         background: #fff;
         border-color: #d1d5db;
+        transform: none;
+        width: 100%;
       }
       .btn-reset {
         display: none;
@@ -284,7 +307,7 @@
       </ul>
     </div>
 
-    <!-- 3. 천재 루틴 핵심: 사고·연결·문제설정 -->
+    <!-- 3. 사고 확장 & 연결 루틴 -->
     <div class="card">
       <div class="card-header">
         <div>
@@ -438,9 +461,75 @@
       </ul>
       <div class="small-note">안 해도 되지만, 하면 성장 곡선이 더 가팔라짐.</div>
     </div>
+
+    <!-- ▼▼▼ bottom vertical rectangles ▼▼▼ -->
+    <div style="
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 24px;
+    ">
+      <!-- 1) 시 문구 박스 -->
+      <div style="
+        flex: 1 1 250px;
+        padding: 18px 18px 16px;
+        border-radius: 16px;
+        background: #020617;
+        border: 1px solid rgba(148,163,184,0.4);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      ">
+        <div style="
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: #9ca3af;
+          margin-bottom: 6px;
+        ">시 문구</div>
+
+        <div style="font-size: 14px; line-height: 1.6;">
+          <span style="color:#e5e7eb;">
+            스탠드에 앉아 운동장만 건너다보다가  <br>
+            이제 곧 모두 사라질 테니 <br>
+            이 순간을 기억해야 한다는 너를 보며 <br>
+            나는 알았다
+          </span>
+        </div>
+      </div>
+
+      <!-- 2) 하율이를 위해 -->
+      <div style="
+        flex: 1 1 250px;
+        padding: 18px 18px 16px;
+        border-radius: 16px;
+        background: #020617;
+        border: 1px solid rgba(148,163,184,0.4);
+        box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+      ">
+        <div style="
+          font-size: 12px;
+          text-transform: uppercase;
+          letter-spacing: 0.12em;
+          color: #9ca3af;
+          margin-bottom: 6px;
+        ">하율이를 위해</div>
+
+        <div style="font-size: 14px; line-height: 1.6;">
+          <span style="font-weight:600; color:#e5e7eb;">
+            너는 포기하는 법을 모르는 아이니까.  <br><br>
+          </span>
+          하루에 한 걸음 씩만 나아가자. <br>
+          오늘 한 걸음이 쌓이면, 네가 꿈꾸는 그 ‘천재성’은  
+          결국 네가 만든 결과일 뿐이야. 
+          <br><br>
+          오늘이 어제보다 조금이라도 나아졌다면, 그럼 된거야. <br>
+          오늘도 고생하고, 고생했어, 하율아.
+        </div>
+      </div>
+    </div>
+    <!-- ▲▲▲ bottom rectangles 끝 -->
   </div>
 
-  <!-- 하단 요약 바 -->
+  <!-- 하단 요약 바 (fixed) -->
   <div class="summary-bar">
     <div class="summary-text">
       오늘 완료한 항목: <span id="completedCount">0</span> / <span id="totalCount">0</span>
@@ -481,74 +570,5 @@
       dateInput.value = `${yyyy}-${mm}-${dd}`;
     });
   </script>
-
-    <!-- ▼▼▼ bottom vertical rectangles ▼▼▼ -->
-
-<div style="
-  display: flex;
-  gap: 16px;
-  margin-top: 24px;
-">
-
-  <!-- 1) 시 문구 박스 -->
-  <div style="
-    flex: 1;
-    padding: 18px 18px 16px;
-    border-radius: 16px;
-    background: #020617;
-    border: 1px solid rgba(148,163,184,0.4);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  ">
-    <div style="
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    ">시 문구</div>
-
-    <div style="font-size: 14px; line-height: 1.6;">
-      <span style="color:#e5e7eb;">
-      스탠드에 앉아 운동장만 건너다보다가  <br>
-      이제 곧 모두 사라질 테니 <br>
-      이 순간을 기억해야 한다는 너를 보며 <br>
-      나는 알았다
-        </span>     
-    </div>
-  </div>
-
-  <!-- 2) 하율이를 위해 -->
-  <div style="
-    flex: 1;
-    padding: 18px 18px 16px;
-    border-radius: 16px;
-    background: #020617;
-    border: 1px solid rgba(148,163,184,0.4);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-  ">
-    <div style="
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #9ca3af;
-      margin-bottom: 6px;
-    ">하율이를 위해</div>
-
-    <div style="font-size: 14px; line-height: 1.6;">
-      <span style="font-weight:600; color:#e5e7eb;">
-        너는 포기하는 법을 모르는 아이니까.  <br><br>
-      </span>
-      하루에 한 걸음 씩만 나아가자. <br>
-      오늘 한 걸음이 쌓이면, 네가 꿈꾸는 그 ‘천재성’은  
-      결국 네가 만든 결과일 뿐이야. 
-      
-      <br> <br>
-        
-      오늘이 어제보다 조금이라도 나아졌다면, 그럼 된거야.
-      오늘도 고생하고, 고생했어, 하율아.
-    </div>
-  </div>
-
-</div>
 </body>
 </html>
