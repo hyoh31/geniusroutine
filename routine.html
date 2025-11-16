@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>천재 루틴 하루 체크리스트</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background: #0f172a;
+      color: #e5e7eb;
+    }
+    h1, h2, h3 {
+      margin: 0 0 10px;
+    }
+    h1 {
+      font-size: 26px;
+      margin-bottom: 15px;
+    }
+    .date-row {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    input[type="date"] {
+      padding: 6px 8px;
+      border-radius: 8px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+    }
+    .container {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+    .card {
+      background: #020617;
+      border-radius: 16px;
+      padding: 16px 18px 14px;
+      margin-bottom: 14px;
+      border: 1px solid #1f2933;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.35);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .card-title {
+      font-size: 18px;
+      font-weight: 600;
+    }
+    .card-subtitle {
+      font-size: 12px;
+      color: #9ca3af;
+    }
+    ul.checklist {
+      list-style: none;
+      padding-left: 0;
+      margin: 4px 0 0;
+    }
+    ul.checklist li {
+      margin: 4px 0;
+    }
+    label {
+      cursor: pointer;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    input[type="checkbox"] {
+      margin-top: 2px;
+      width: 16px;
+      height: 16px;
+      cursor: pointer;
+    }
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      padding: 2px 8px;
+      border-radius: 999px;
+      background: rgba(59,130,246,0.15);
+      color: #bfdbfe;
+      border: 1px solid rgba(59,130,246,0.4);
+    }
+    .pill-strong {
+      background: rgba(34,197,94,0.18);
+      color: #bbf7d0;
+      border-color: rgba(34,197,94,0.5);
+    }
+    .section-tag {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: #9ca3af;
+      margin-bottom: 4px;
+    }
+    .summary-bar {
+      position: sticky;
+      bottom: 10px;
+      margin-top: 16px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid #1f2937;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      backdrop-filter: blur(12px);
+      max-width: 850px;
+    }
+    .summary-text {
+      font-size: 13px;
+      color: #e5e7eb;
+    }
+    .summary-text span {
+      font-weight: 600;
+    }
+    .btn-reset {
+      font-size: 12px;
+      padding: 5px 10px;
+      border-radius: 999px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      cursor: pointer;
+    }
+    .btn-reset:hover {
+      background: #111827;
+    }
+    textarea {
+      width: 100%;
+      min-height: 60px;
+      border-radius: 10px;
+      border: 1px solid #4b5563;
+      background: #020617;
+      color: #e5e7eb;
+      padding: 8px;
+      font-size: 13px;
+      resize: vertical;
+    }
+    .small-note {
+      font-size: 11px;
+      color: #9ca3af;
+      margin-top: 4px;
+    }
+    @media print {
+      body {
+        background: #fff;
+        color: #000;
+      }
+      .card {
+        box-shadow: none;
+        border-color: #d1d5db;
+      }
+      .summary-bar {
+        position: static;
+        background: #fff;
+        border-color: #d1d5db;
+      }
+      .btn-reset {
+        display: none;
+      }
+      input[type="date"] {
+        border-color: #9ca3af;
+        color: #000;
+        background: #fff;
+      }
+      textarea {
+        border-color: #9ca3af;
+        background: #fff;
+        color: #000;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>천재 루틴 하루 체크리스트</h1>
+    <div class="date-row">
+      <span>오늘 날짜:</span>
+      <input type="date" id="dateInput" />
+      <span class="small-note">※ 하루에 한 번 이 페이지를 위한 날짜만 적어두기</span>
+    </div>
+
+    <!-- 0. 폰 사용 약속 -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">RULE</div>
+          <div class="card-title">휴대폰 사용 규칙</div>
+        </div>
+        <div class="pill pill-strong">하루 약속</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘은 휴대폰을 윌라 / 오디오북 / 전자책 앱에만 사용했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            공부·집중 시간 동안 SNS / 유튜브 / 게임을 켜지 않았다.
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 1. 브레인 프라이밍 -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">MORNING</div>
+          <div class="card-title">브레인 프라이밍 (20–30분)</div>
+        </div>
+        <div class="pill">뇌 워밍업</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오디오북 / 전자책으로 가벼운 지식 인풋 20–30분 (과학, 수학, 인문, 소설 등)
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            수학·과학 문제 2~3개 또는 개념 1개를 눈으로라도 확인했다.
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 2. 집중 학습 블록 (총 2시간 30분) -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">STUDY CORE</div>
+          <div class="card-title">집중 학습 블록 (최소 2시간 30분)</div>
+        </div>
+        <div class="pill pill-strong">필수 목표</div>
+      </div>
+      <div class="card-subtitle">
+        수학 · 과학 · 영어 / 국어 중에서 골라 총 2시간 30분 이상 채우기
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            집중 블록 ① 60분 (과목: 수학)
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            집중 블록 ② 60분 (과목: 화학 / 과학)
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            집중 블록 ③ 30분 (과목: 영어)
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 공부 총합이 2시간 30분 이상인지 확인했다.
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 3. 천재 루틴 핵심: 사고·연결·문제설정 -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">THINKING</div>
+          <div class="card-title">사고 확장 & 연결 루틴</div>
+        </div>
+        <div class="pill">지능 재설계</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 새로 배운 것 <strong>3개</strong>를 (핵심 · 연결 · 적용 아이디어) 형식으로 정리했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 내가 직접 만든 <strong>질문/문제 1개</strong>가 있다. (수학, 과학, 세계관, 철학 무엇이든)
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            뇌 속에서 떠다니던 생각을 문장/키워드 구조로 한 번이라도 재구성해봤다.
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 4. Output 루틴 (학문/창작/기술) -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">OUTPUT</div>
+          <div class="card-title">미니 Output & 멀티 도메인</div>
+        </div>
+        <div class="pill">천재형 뇌 사용</div>
+      </div>
+      <div class="card-subtitle">
+        가능하면 세 영역(학문 · 창작 · 기술) 모두를 건드리기
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            학문 Output 1개: 수학/과학 문제 풀이, 요약, 정리 중 하나를 했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            창작 Output 1개: 글/세계관/대사/시/아이디어 조각을 최소 5줄 이상 남겼다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            기술 Output 1개: 코드, 로봇/기계 아이디어, 설계, 알고리즘 구상 중 하나를 했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            최소한 Output 1개 이상은 오늘 확실히 만들어냈다.
+          </label>
+        </li>
+      </ul>
+    </div>
+
+    <!-- 5. 감정 에너지 & 아이디어 기록 -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">EMOTION</div>
+          <div class="card-title">감정 폭발 & 아이디어 캡처</div>
+        </div>
+        <div class="pill">30초 루틴</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 강하게 느꼈던 감정/장면을 키워드 2~3개와 이미지 1개로 기록했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            그 감정/이미지를 글·세계관·문제 설정 중 한 곳에 연결해볼 생각을 했다.
+          </label>
+        </li>
+      </ul>
+      <div class="small-note">예: “분노 · 수치심 · 기대 / 밤거리 가로등 아래 …”</div>
+    </div>
+
+    <!-- 6. 하루 피드백 -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">REFLECTION</div>
+          <div class="card-title">하루 마무리 피드백 (5분)</div>
+        </div>
+        <div class="pill">자기 수정</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 가장 잘한 것 1개를 적었다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 가장 아쉬웠던 것 1개를 적었다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            내일의 포커스 1개를 정했다.
+          </label>
+        </li>
+      </ul>
+      <textarea placeholder="간단 메모: 잘한 것 / 아쉬운 것 / 내일의 포커스"></textarea>
+    </div>
+
+    <!-- 7. 추가 미션 (선택) -->
+    <div class="card">
+      <div class="card-header">
+        <div>
+          <div class="section-tag">OPTIONAL</div>
+          <div class="card-title">추가 미션 (선택)</div>
+        </div>
+        <div class="pill">레벨업용</div>
+      </div>
+      <ul class="checklist">
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            오늘 한 공부/창작 중 하나를 남에게 설명하거나, 누군가와 깊은 대화를 시도했다.
+          </label>
+        </li>
+        <li>
+          <label>
+            <input type="checkbox" class="task-checkbox" />
+            일부러 난이도 높은 문제/과제를 하나 골라 머리 싸매고 붙잡아봤다.
+          </label>
+        </li>
+      </ul>
+      <div class="small-note">안 해도 되지만, 하면 성장 곡선이 더 가팔라짐.</div>
+    </div>
+  </div>
+
+  <!-- 하단 요약 바 -->
+  <div class="summary-bar">
+    <div class="summary-text">
+      오늘 완료한 항목: <span id="completedCount">0</span> / <span id="totalCount">0</span>
+    </div>
+    <button class="btn-reset" id="resetBtn">체크 전부 초기화</button>
+  </div>
+
+  <script>
+    function updateCounts() {
+      const checkboxes = document.querySelectorAll(".task-checkbox");
+      const total = checkboxes.length;
+      let completed = 0;
+      checkboxes.forEach(cb => {
+        if (cb.checked) completed++;
+      });
+      document.getElementById("completedCount").textContent = completed;
+      document.getElementById("totalCount").textContent = total;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      const checkboxes = document.querySelectorAll(".task-checkbox");
+      checkboxes.forEach(cb => {
+        cb.addEventListener("change", updateCounts);
+      });
+      updateCounts();
+
+      document.getElementById("resetBtn").addEventListener("click", () => {
+        checkboxes.forEach(cb => (cb.checked = false));
+        updateCounts();
+      });
+
+      // 기본값으로 오늘 날짜 자동 입력
+      const dateInput = document.getElementById("dateInput");
+      const today = new Date();
+      const yyyy = today.getFullYear();
+      const mm = String(today.getMonth() + 1).padStart(2, "0");
+      const dd = String(today.getDate()).padStart(2, "0");
+      dateInput.value = `${yyyy}-${mm}-${dd}`;
+    });
+  </script>
+
+    <!-- ▼▼▼ bottom vertical rectangles ▼▼▼ -->
+
+<div style="
+  display: flex;
+  gap: 16px;
+  margin-top: 24px;
+">
+
+  <!-- 1) 시 문구 박스 -->
+  <div style="
+    flex: 1;
+    padding: 18px 18px 16px;
+    border-radius: 16px;
+    background: #020617;
+    border: 1px solid rgba(148,163,184,0.4);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  ">
+    <div style="
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    ">시 문구</div>
+
+    <div style="font-size: 14px; line-height: 1.6;">
+      <span style="color:#e5e7eb;">
+      스탠드에 앉아 운동장만 건너다보다가  <br>
+      이제 곧 모두 사라질 테니 <br>
+      이 순간을 기억해야 한다는 너를 보며 <br>
+      나는 알았다
+        </span>     
+    </div>
+  </div>
+
+  <!-- 2) 하율이를 위해 -->
+  <div style="
+    flex: 1;
+    padding: 18px 18px 16px;
+    border-radius: 16px;
+    background: #020617;
+    border: 1px solid rgba(148,163,184,0.4);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.35);
+  ">
+    <div style="
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #9ca3af;
+      margin-bottom: 6px;
+    ">하율이를 위해</div>
+
+    <div style="font-size: 14px; line-height: 1.6;">
+      <span style="font-weight:600; color:#e5e7eb;">
+        너는 포기하는 법을 모르는 아이니까.  <br><br>
+      </span>
+      하루에 한 걸음 씩만 나아가자. <br>
+      오늘 한 걸음이 쌓이면, 네가 꿈꾸는 그 ‘천재성’은  
+      결국 네가 만든 결과일 뿐이야. 
+      
+      <br> <br>
+        
+      오늘이 어제보다 조금이라도 나아졌다면, 그럼 된거야.
+      오늘도 고생하고, 고생했어, 하율아.
+    </div>
+  </div>
+
+</div>
+</body>
+</html>
